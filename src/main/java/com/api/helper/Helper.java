@@ -21,11 +21,7 @@ public class Helper {
 
         String contentType = file.getContentType();
 
-        if (contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) {
-            return true;
-        } else {
-            return false;
-        }
+        return contentType.equals("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
     }
 
@@ -41,11 +37,8 @@ public class Helper {
             XSSFSheet sheet = workbook.getSheetAt(0);
 
             int rowNumber = 0;
-            Iterator<Row> iterator = sheet.iterator();
 
-            while (iterator.hasNext()) {
-                Row row = iterator.next();
-
+            for (Row row : sheet) {
                 if (rowNumber == 0) {
                     rowNumber++;
                     continue;
@@ -58,38 +51,18 @@ public class Helper {
                     Cell cell = cells.next();
 
                     switch (cid) {
-                        case 0:
-                            obj.setCompanyId(cell.getStringCellValue());
-                            break;
-                        case 1:
-                            obj.setCompanyName(cell.getStringCellValue());
-                            break;
-                        case 2:
-                            obj.setCircleId(cell.getStringCellValue());
-                            break;
-                        case 3:
-                            obj.setCircleName(cell.getStringCellValue());
-                            break;
-                        case 4:
-                            obj.setDivisionId(cell.getStringCellValue());
-                            break;
-                        case 5:
-                            obj.setDivisionName(cell.getStringCellValue());
-                            break;
-                        case 6:
-                            obj.setSubDivisionId(cell.getStringCellValue());
-                            break;
-                        case 7:
-                            obj.setSubDivisionName(cell.getStringCellValue());
-                            break;
-                        case 8:
-                            obj.setPssId(cell.getStringCellValue());
-                            break;
-                        case 9:
-                            obj.setPssName(cell.getStringCellValue());
-                            break;
-                        default:
-                            break;
+                        case 0 -> obj.setCompanyId(cell.getStringCellValue());
+                        case 1 -> obj.setCompanyName(cell.getStringCellValue());
+                        case 2 -> obj.setCircleId(cell.getStringCellValue());
+                        case 3 -> obj.setCircleName(cell.getStringCellValue());
+                        case 4 -> obj.setDivisionId(cell.getStringCellValue());
+                        case 5 -> obj.setDivisionName(cell.getStringCellValue());
+                        case 6 -> obj.setSubDivisionId(cell.getStringCellValue());
+                        case 7 -> obj.setSubDivisionName(cell.getStringCellValue());
+                        case 8 -> obj.setPssId(cell.getStringCellValue());
+                        case 9 -> obj.setPssName(cell.getStringCellValue());
+                        default -> {
+                        }
                     }
                     cid++;
                 }
@@ -139,7 +112,7 @@ public class Helper {
             companyJsonObject.put("circles", company.getCircleList());
             companyJsonArray.put(companyJsonObject);
         }
-        System.out.println("Json Array: " + companyJsonArray.toString());
+        System.out.println("Json Array: " + companyJsonArray);
         return  companyJsonArray.toString();
     }
 
